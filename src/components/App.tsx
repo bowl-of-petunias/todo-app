@@ -1,7 +1,12 @@
 import * as React from 'react';
 
-const App: React.SFC = () => (
-  <div>App</div>
-);
+import AddTodoForm from './AddTodoForm';
+import TodoList from './TodoList';
 
-export default App;
+export const App: React.SFC = () => (
+  <div>
+    <div>Todo App</div>
+    <AddTodoForm />
+    <TodoList />
+  </div>
+);
