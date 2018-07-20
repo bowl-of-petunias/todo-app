@@ -2,10 +2,11 @@ import './TodoItem.css';
 
 import classNames from 'classnames';
 import * as React from 'react';
-import { connect, MapStateToProps } from 'react-redux';
+import { connect } from 'react-redux';
 
 import { toggleTodo } from '../actions';
 import { RootState } from '../reducers';
+import { getTodo } from '../selectors';
 
 interface OwnProps {
   id: number;
@@ -33,11 +34,9 @@ const TodoItem: React.SFC<StateProps & DispatchProps> = (props) => {
   );
 };
 
-const mapState: MapStateToProps<StateProps, OwnProps, RootState> = (state, ownProps) => ({
-  completed: state.todos.entities[ownProps.id].completed,
-  title: state.todos.entities[ownProps.id].title,
-});
-
-export default connect<StateProps, DispatchProps, OwnProps, RootState>(mapState, (dispatch, ownProps) => ({
+export default connect<StateProps, DispatchProps, OwnProps, RootState>((state, ownProps) => ({
+  completed: getTodo(state, ownProps.id).completed,
+  title: getTodo(state, ownProps.id).title,
+}), (dispatch, ownProps) => ({
   toggleTodo: () => dispatch(toggleTodo(ownProps.id))
 }))(TodoItem);
